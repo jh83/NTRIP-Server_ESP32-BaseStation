@@ -1,13 +1,14 @@
 
 # Description
 
-NTRIP server running on Olimex ESP32-POE hardware along with a ZED-F9P. The solution contains a web page thru which all configuration is handled.
+NTRIP server running on Olimex ESP32-POE hardware along with a i2c connected ZED-F9P.
 
-It has been tested successfully against RTK2GO.com.
+The admin/configuration webpages are built with bootstrap to allow for scaling on mobile devices.
+
+The solution has been tested successfully against RTK2GO.com.
 
 ![index.html](/images/index.png "index.html")
 ![settings.html](/images/settings.png "settings.html")
-
 
 ## Credits
 
