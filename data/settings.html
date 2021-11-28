@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>ESP32 NTRIP Server</title>
+
+    <!-- Custom fonts for this template-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/4.1.4/css/sb-admin-2.min.css"
+        integrity="sha512-Mk4n0eeNdGiUHlWvZRybiowkcu+Fo2t4XwsJyyDghASMeFGH6yUXcdDI3CKq12an5J8fq4EFzRVRdbjerO3RmQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+    <!--  Lefleat map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+</head>
+
+<body id="page-top" onload="settingsStart()">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white mb-4 static-top shadow">
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a class="nav-link font-weight-bold " href="/">HOME</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link font-weight-bold" href="/settings.html">SETTINGS<span
+                                    class="sr-only">(current)</span></a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Alerts -->
+                        <li class="nav-item no-arrow mx-1">
+                            <a class="nav-link ">
+                                <i class="fas fa-satellite-dish fa-fw"></i>
+                                <!-- Counter - Alerts -->
+                                <span class="badge  badge-danger badge-counter" id="sivBadge">X</span>
+                            </a>
+
+                        </li>
+
+                        <!-- Nav Item - Messages -->
+                        <li class="nav-item  no-arrow mx-1">
+                            <a class="nav-link">
+                                <i class="fas fa-network-wired fa-fw"></i>
+                                <!-- Counter - Messages -->
+                                <span class="badge badge-danger badge-counter" id="ntripBade">X</span>
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <div class="col-xl-8 col-md-12 mb-12">
+                    <form action="/applySettings" target="hidden-form" class="needs-validation" novalidate>
+                        <h4>Device Settings</h4>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="hostName">Hostname</label>
+                                <input type="text" class="form-control" id="hostname" name="hostname"
+                                    placeholder="Hostname" required>
+                                <small class="form-text text-muted">Hostname to be used on the network.</small>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="ntrip_sName">NTRIP Server Name</label>
+                                <input type="text" class="form-control" id="ntrip_sName" name="ntrip_sName"
+                                    placeholder="NTRIP Server Name" required>
+                                <small class="form-text text-muted">Hostname to be announced on the network.</small>
+                            </div>
+                        </div>
+
+                        <h4>Coordinates</h4>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="ecefX">ECEF X</label>
+                                <input type="number" step="0.001" class="form-control" id="ecefX" name="ecefX"
+                                    placeholder="ECEF X" required>
+                                <small class="form-text text-muted">In meters.</small>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="ecefY">ECEF Y</label>
+                                <input type="number" step="0.001" class="form-control" id="ecefY" name="ecefY"
+                                    placeholder="ECEF Y" required>
+                                <small class="form-text text-muted">In meters.</small>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="ecefZ">ECEF Z</label>
+                                <input type="number" step="0.001" class="form-control" id="ecefZ" name="ecefZ"
+                                    placeholder="ECEF Z" required>
+                                <small class="form-text text-muted">In meters.</small>
+                            </div>
+                        </div>
+
+                        <h4>NTRIP Settings</h4>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="casterHost">Caster Host</label>
+                                <input type="text" class="form-control" id="casterHost" name="casterHost"
+                                    placeholder="Caster Host" required>
+                                <small class="form-text text-muted">URL of the Caster server.</small>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="casterPort">Caster Port</label>
+                                <input type="number" class="form-control" id="casterPort" name="casterPort"
+                                    placeholder="Caster Port" required>
+                                <small class="form-text text-muted">Port of the Caster server.</small>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="rtk_mntpnt">RTK2go mountpoint</label>
+                                <input type="text" class="form-control" id="rtk_mntpnt" name="rtk_mntpnt"
+                                    placeholder="RTK2go mountpoint" required>
+                                <small class="form-text text-muted">RTK2go Mount point.</small>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="rtk_mntpnt_pw">RTK2go password</label>
+                                <input type="password" class="form-control" id="rtk_mntpnt_pw" name="rtk_mntpnt_pw"
+                                    placeholder="RTK2go password" required'>
+                                <small class="form-text text-muted">RTK2go Mount point password.</small>
+                            </div>
+                        </div>
+
+                        <div class="custom-control custom-switch">
+                            <input type='hidden' value='0' name="connectNtrip">
+                            <input type="checkbox" class="custom-control-input" value='1' name="connectNtrip"
+                                id="connectNtrip">
+                            <label class="custom-control-label" for="connectNtrip">Connect to NTRIP Server</label>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary" onClick="submitMessage()">Save &
+                            Reboot</button>
+                    </form>
+                    <iframe style="display:none" name="hidden-form"></iframe>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+            </div>
+        </div>
+        <!-- End of Content Wrapper -->
+
+
+        <!-- Bootstrap core JavaScript-->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+            crossorigin="anonymous"></script>
+
+        <!-- Core plugin JavaScript-->
+        <!-- <script src="vendor/jquery-easing/jquery.easing.min.js"></script> -->
+
+        <!-- Custom scripts for all pages-->
+        <!-- <script src="js/sb-admin-2.min.js"></script> -->
+
+        <!-- Page level custom scripts -->
+        <script src="js/app.js"></script>
+
+</body>
+
+</html>
