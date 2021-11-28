@@ -1,3 +1,5 @@
+// Credits to sparkfun for making some of the libraries used in this project
+// and also for their guidance on how to get started with RTK GPS
 #include <Arduino.h>
 #include <ETH.h>
 #include <ESPmDNS.h>
