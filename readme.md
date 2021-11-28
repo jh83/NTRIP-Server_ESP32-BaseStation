@@ -1,7 +1,7 @@
 
 # Description
 
-NTRIP server running on Olimex ESP32-POE hardware along with a i2c connected ZED-F9P.
+NTRIP server running on Olimex ESP32-POE hardware along with a i2c connected ZED-F9P GNSS unit.
 
 The admin/configuration webpages are built with bootstrap to allow for scaling on mobile devices.
 
