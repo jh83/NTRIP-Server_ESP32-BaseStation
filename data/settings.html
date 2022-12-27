@@ -53,7 +53,7 @@
                             </li>
                             <li class="nav-item active">
                                 <a class="nav-link font-weight-bold" href="/settings.html">SETTINGS<span
-                                    class="sr-only">(current)</span></a>
+                                        class="sr-only">(current)</span></a>
                             </li>
                         </ul>
                     </div>
@@ -86,97 +86,98 @@
                 </nav>
                 <!-- End of Topbar -->
 
-            <!-- Begin Page Content -->
-            <div class="container-fluid">
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <div class="col-xl-8 col-md-12 mb-12">
+                        <form action="/applySettings" target="hidden-form" class="needs-validation" novalidate>
+                            <h4>Device Settings</h4>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="hostName">Hostname</label>
+                                    <input type="text" class="form-control" id="hostname" name="hostname"
+                                        placeholder="Hostname" required>
+                                    <small class="form-text text-muted">Hostname to be used on the network.</small>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="ntrip_sName">NTRIP Server Name</label>
+                                    <input type="text" class="form-control" id="ntrip_sName" name="ntrip_sName"
+                                        placeholder="NTRIP Server Name" required>
+                                    <small class="form-text text-muted">Hostname to be announced on the network.</small>
+                                </div>
+                            </div>
 
-                <div class="col-xl-8 col-md-12 mb-12">
-                    <form action="/applySettings" target="hidden-form" class="needs-validation" novalidate>
-                        <h4>Device Settings</h4>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="hostName">Hostname</label>
-                                <input type="text" class="form-control" id="hostname" name="hostname"
-                                    placeholder="Hostname" required>
-                                <small class="form-text text-muted">Hostname to be used on the network.</small>
+                            <h4>Coordinates</h4>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="ecefX">ECEF X</label>
+                                    <input type="number" step="0.001" class="form-control" id="ecefX" name="ecefX"
+                                        placeholder="ECEF X" required>
+                                    <small class="form-text text-muted">In meters.</small>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="ecefY">ECEF Y</label>
+                                    <input type="number" step="0.001" class="form-control" id="ecefY" name="ecefY"
+                                        placeholder="ECEF Y" required>
+                                    <small class="form-text text-muted">In meters.</small>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="ecefZ">ECEF Z</label>
+                                    <input type="number" step="0.001" class="form-control" id="ecefZ" name="ecefZ"
+                                        placeholder="ECEF Z" required>
+                                    <small class="form-text text-muted">In meters.</small>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="ntrip_sName">NTRIP Server Name</label>
-                                <input type="text" class="form-control" id="ntrip_sName" name="ntrip_sName"
-                                    placeholder="NTRIP Server Name" required>
-                                <small class="form-text text-muted">Hostname to be announced on the network.</small>
-                            </div>
-                        </div>
 
-                        <h4>Coordinates</h4>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="ecefX">ECEF X</label>
-                                <input type="number" step="0.001" class="form-control" id="ecefX" name="ecefX"
-                                    placeholder="ECEF X" required>
-                                <small class="form-text text-muted">In meters.</small>
+                            <h4>NTRIP Settings</h4>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="casterHost">Caster Host</label>
+                                    <input type="text" class="form-control" id="casterHost" name="casterHost"
+                                        placeholder="Caster Host" required>
+                                    <small class="form-text text-muted">URL of the Caster server.</small>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="casterPort">Caster Port</label>
+                                    <input type="number" class="form-control" id="casterPort" name="casterPort"
+                                        placeholder="Caster Port" required>
+                                    <small class="form-text text-muted">Port of the Caster server.</small>
+                                </div>
                             </div>
-                            <div class="form-group col-md-4">
-                                <label for="ecefY">ECEF Y</label>
-                                <input type="number" step="0.001" class="form-control" id="ecefY" name="ecefY"
-                                    placeholder="ECEF Y" required>
-                                <small class="form-text text-muted">In meters.</small>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="ecefZ">ECEF Z</label>
-                                <input type="number" step="0.001" class="form-control" id="ecefZ" name="ecefZ"
-                                    placeholder="ECEF Z" required>
-                                <small class="form-text text-muted">In meters.</small>
-                            </div>
-                        </div>
 
-                        <h4>NTRIP Settings</h4>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="casterHost">Caster Host</label>
-                                <input type="text" class="form-control" id="casterHost" name="casterHost"
-                                    placeholder="Caster Host" required>
-                                <small class="form-text text-muted">URL of the Caster server.</small>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="rtk_mntpnt">RTK2go mountpoint</label>
+                                    <input type="text" class="form-control" id="rtk_mntpnt" name="rtk_mntpnt"
+                                        placeholder="RTK2go mountpoint" required>
+                                    <small class="form-text text-muted">RTK2go Mount point.</small>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="rtk_mntpnt_pw">RTK2go password</label>
+                                    <input type="password" class="form-control" id="rtk_mntpnt_pw" name="rtk_mntpnt_pw"
+                                        placeholder="RTK2go password" required'>
+                                    <small class="form-text text-muted">RTK2go Mount point password.</small>
+                                </div>
                             </div>
-                            <div class="form-group col-md-4">
-                                <label for="casterPort">Caster Port</label>
-                                <input type="number" class="form-control" id="casterPort" name="casterPort"
-                                    placeholder="Caster Port" required>
-                                <small class="form-text text-muted">Port of the Caster server.</small>
-                            </div>
-                        </div>
 
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="rtk_mntpnt">RTK2go mountpoint</label>
-                                <input type="text" class="form-control" id="rtk_mntpnt" name="rtk_mntpnt"
-                                    placeholder="RTK2go mountpoint" required>
-                                <small class="form-text text-muted">RTK2go Mount point.</small>
+                            <div class="custom-control custom-switch">
+                                <input type='hidden' value='0' name="connectNtrip">
+                                <input type="checkbox" class="custom-control-input" value='1' name="connectNtrip"
+                                    id="connectNtrip">
+                                <label class="custom-control-label" for="connectNtrip">Connect to NTRIP Server</label>
                             </div>
-                            <div class="form-group col-md-4">
-                                <label for="rtk_mntpnt_pw">RTK2go password</label>
-                                <input type="password" class="form-control" id="rtk_mntpnt_pw" name="rtk_mntpnt_pw"
-                                    placeholder="RTK2go password" required'>
-                                <small class="form-text text-muted">RTK2go Mount point password.</small>
-                            </div>
-                        </div>
+                            <br>
+                            <button type="submit" class="btn btn-primary" onClick="submitMessage()">Save &
+                                Reboot</button>
+                            <button type="submit" class="btn btn-primary" formaction="/restart" onClick="submitMessage()">
+                                Only Reboot</button>
+                        </form>
+                        <iframe style="display:none" name="hidden-form"></iframe>
+                    </div>
 
-                        <div class="custom-control custom-switch">
-                            <input type='hidden' value='0' name="connectNtrip">
-                            <input type="checkbox" class="custom-control-input" value='1' name="connectNtrip"
-                                id="connectNtrip">
-                            <label class="custom-control-label" for="connectNtrip">Connect to NTRIP Server</label>
-                        </div>
-                        <br>
-                        <button type="submit" class="btn btn-primary" onClick="submitMessage()">Save &
-                            Reboot</button>
-                    </form>
-                    <iframe style="display:none" name="hidden-form"></iframe>
                 </div>
-
-            </div>
-            <!-- /.container-fluid -->
+                <!-- /.container-fluid -->
 
             </div>
         </div>

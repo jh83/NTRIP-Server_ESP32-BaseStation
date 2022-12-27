@@ -11,7 +11,7 @@ MongooseHttpServer server;
 
 static void notFound(MongooseHttpServerRequest *request)
 {
-  request->send(404, "text/plain", "Not found");
+    request->send(404, "text/plain", "Not found");
 }
 
 // Start web server
@@ -30,16 +30,19 @@ void initializeWebServer()
     server.on("/js/app.js$", HTTP_GET, [](MongooseHttpServerRequest *request)
               { request->send(200, "application/javascript", readSpiffsFile("/js/app.js")); });
 
+    server.on("/restart$", HTTP_GET, [](MongooseHttpServerRequest *request)
+              { 
+                //String message = "<!DOCTYPE html><html><head><title> Old Page</ title><meta charset = 'UTF-8' /><meta http - equiv = 'refresh' content = '3; URL=https://www.hubspot.com/' /> </ head><body><p> This page has been moved.If you are not redirected within 3 seconds, click<a href = 'https://www.hubspot.com/'> here</ a> to go to the HubSpot homepage.</ p></ body></ html>"; 
+                request->send(200, "text/html", "message");
+                ESP.restart(); });
+
     server.on("/settings$", HTTP_GET, [](MongooseHttpServerRequest *request)
               {
                   String message;
                   serializeJson(settings, message);
-                  request->send(200, "text/plain", message);
-              });
+                  request->send(200, "text/plain", message); });
     server.on("/log$", HTTP_GET, [](MongooseHttpServerRequest *request)
-              {
-                  request->send(200, "text/plain", getLog());
-              });
+              { request->send(200, "text/plain", getLog()); });
 
     server.on("/status$", HTTP_GET, [](MongooseHttpServerRequest *request)
               {
@@ -70,8 +73,7 @@ void initializeWebServer()
 
                   String message;
                   serializeJson(status, message);
-                  request->send(200, "text/plain", message);
-              });
+                  request->send(200, "text/plain", message); });
 
     server.on("/applySettings$", HTTP_GET, [](MongooseHttpServerRequest *request)
               {
@@ -118,8 +120,7 @@ void initializeWebServer()
 
                   request->send(200, "text/plain", inputMessage);
 
-                  ESP.restart();
-              });
+                  ESP.restart(); });
 
     server.onNotFound(notFound);
 }
